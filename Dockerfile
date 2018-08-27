@@ -25,4 +25,4 @@ VOLUME ["/app/workspace"]
 
 EXPOSE ${PORT}
 
-CMD /usr/local/bin/node server.js -a ${AUTH} -p ${PORT} -w ./workspace --collab --no-cache
+CMD /usr/local/bin/node server.js -a ${AUTH} -l 0.0.0.0 -p ${PORT} -w ./workspace --collab --no-cache
