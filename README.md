@@ -15,7 +15,7 @@ docker build -t cloud9:dev .
 ```
 
 ```shell
-docker run -d -p 9099:9099 cloud9:dev
+docker run -d -p 9099:9099 -v /path/to/workspace:/app/workspace cloud9:dev
 ```
 
 ## Deployment
@@ -27,5 +27,5 @@ docker pull saidsef/cloud9-containerised
 ```
 
 ```shell
-docker run -d -p 9099:9099 saidsef/cloud9-containerised
+docker run -d -p 9099:9099 -v /path/to/workspace:/app/workspace saidsef/cloud9-containerised
 ```
