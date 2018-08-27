@@ -1,10 +1,12 @@
 FROM node:8-slim
 MAINTAINER Said Sef <saidsef@gmail.com> (saidsef.co.uk/)
 
-ARG PORT=""
+ARG PORT="9099"
+ARG AUTH=":"
 
+ENV AUTH ${AUTH}
 ENV DEBIAN_FRONTEND noninteractive
-ENV PORT ${PORT:-9099}
+ENV PORT ${PORT}
 
 WORKDIR /app
 
@@ -23,4 +25,4 @@ VOLUME ["/app/workspace"]
 
 EXPOSE ${PORT}
 
-CMD /usr/local/bin/node server.js -a : --listen 0.0.0.0 -p ${PORT} -w ./workspace --collab --no-cache
+CMD /usr/local/bin/node server.js -a ${AUTH} -p ${PORT} -w ./workspace --collab --no-cache
