@@ -12,14 +12,14 @@ WORKDIR /app
 
 RUN apt-get update && \
     apt-get --no-install-recommends -yq install build-essential git curl python3 python2.7 && \
-    useradd -d /app/workspace -s /bin/bash cloud9 && \
+    mkdir -p /app/workspace && \
+    useradd -m -d /app -s /bin/bash -U cloud9 && \
     chown -R cloud9:cloud9 /app
 
 USER cloud9
 
 RUN  git clone --depth 2 https://github.com/c9/core.git . && \ 
-    ./scripts/install-sdk.sh && \
-    mkdir -p workspace
+    ./scripts/install-sdk.sh
 
 VOLUME ["/app/workspace"]
 
