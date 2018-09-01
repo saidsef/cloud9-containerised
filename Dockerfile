@@ -11,7 +11,7 @@ ENV PORT ${PORT}
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get --no-install-recommends -yq install build-essential git curl python3 python2.7 && \
+    apt-get --no-install-recommends -yq install build-essential git curl python3 python3-pip python-pip && \
     mkdir -p /app/workspace && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
     chown -R cloud9:cloud9 /app
