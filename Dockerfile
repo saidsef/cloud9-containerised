@@ -12,8 +12,8 @@ WORKDIR /app
 
 RUN apt-get update && \
     apt-get --no-install-recommends -yq install build-essential git curl python3 python2.7 && \
-    useradd -ms /bin/bash cloud9 && \
-    chown -R cloud9 /app
+    useradd -d /app/workspace -gs /bin/bash cloud9 && \
+    chown -R cloud9:cloud9 /app
 
 USER cloud9
 
