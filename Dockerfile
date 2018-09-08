@@ -16,6 +16,7 @@ RUN apt-get update && \
     build-essential git curl && \
     curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
+    curl -fsSL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash && \
     apt-get update && \
     apt-get --no-install-recommends -yq install \
     python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev \
