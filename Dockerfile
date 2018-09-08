@@ -10,8 +10,13 @@ ENV PORT ${PORT}
 
 WORKDIR /app
 
-RUN apt-get update && \
-    apt-get --no-install-recommends -yq install build-essential git curl python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev && \
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+    apt-get update && \
+    apt-get --no-install-recommends -yq install \
+    build-essential git curl \
+    apt-transport-https ca-certificates gnupg2 software-properties-common \
+    python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev \
+    docker-ce && \
     mkdir -p /app/workspace && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
     chown -R cloud9:cloud9 /app
