@@ -17,6 +17,7 @@ RUN apt-get update && \
     curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
     curl -fsSL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash && \
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl -o /usr/bin/kubectl && \
     apt-get update && \
     apt-get --no-install-recommends -yq install \
     python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev \
@@ -24,7 +25,7 @@ RUN apt-get update && \
     mkdir -p /app/workspace && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
     usermod -aG docker cloud9 && \
-    cat /etc/group && \
+    chmod a+rwx /usr/bin/kubectl && \
     chown -R cloud9:cloud9 /app
 
 USER cloud9
