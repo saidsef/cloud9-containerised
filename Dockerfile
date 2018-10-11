@@ -21,6 +21,7 @@ RUN apt-get update && \
     apt-get --no-install-recommends -yq install \
     python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev jq \
     docker-ce && \
+    pip3 install -U botocore boto3 && \
     mkdir -p /app/workspace && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
     usermod -aG docker cloud9 && \
