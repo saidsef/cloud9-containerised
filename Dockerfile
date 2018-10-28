@@ -6,6 +6,8 @@ ARG AUTH=":"
 
 ENV AUTH ${AUTH}
 ENV DEBIAN_FRONTEND noninteractive
+ENV GOALNG_VERSION 1.10.3
+ENV GOLANG_DEB 0.5.0
 ENV PORT ${PORT}
 
 WORKDIR /app
@@ -19,7 +21,14 @@ RUN apt-get update && \
     curl -fsSL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash && \
     apt-get update && \
     apt-get --no-install-recommends -yq install \
-    python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev jq docker-ce graphviz && \
+    python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev jq docker-ce graphviz imagemagick && \
+    cd /tmp && \
+    curl -LO go${GOALNG_VERSION}.linux-amd64.tar.gz && \
+    curl -LO https://github.com/golang/dep/releases/download/v${GOLANG_DEB}/dep-linux-amd64
+    tar xvf go${GOALNG_VERSION}.linux-amd64.tar.gz && \
+    mv go/bin/{go,godoc,gofmt} /usr/local/bin/ && \
+    mv dep-linux-amd64 /usr/local/bin/go-deb && \
+    chmod a+x /usr/local/bin/go-deb && \
     /usr/bin/pip3 install -U botocore boto3 && \
     mkdir -p /app/workspace && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \

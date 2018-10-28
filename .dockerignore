@@ -1,0 +1,9 @@
+.git/
+*.swp
+.ideas
+*/*.zip
+**/*.zip
+*/*.tar
+**/*.tar
+template
+build
