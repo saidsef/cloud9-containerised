@@ -27,7 +27,9 @@ RUN apt-get update && \
     curl -LO https://github.com/golang/dep/releases/download/v${GOLANG_DEB}/dep-linux-amd64 && \
     tar xf go${GOALNG_VERSION}.linux-amd64.tar.gz && \
     ls -lha go/bin/ && \
-    cp -v go/bin/{go,godoc,gofmt} /usr/local/bin/ && \
+    cp -v go/bin/go /usr/local/bin/ && \
+    cp -v go/bin/godoc /usr/local/bin/ && \
+    cp -v go/bin/gofmt /usr/local/bin/ && \
     mv dep-linux-amd64 /usr/local/bin/go-deb && \
     chmod a+x /usr/local/bin/go-deb && \
     rm -rf /tmp/* && \
