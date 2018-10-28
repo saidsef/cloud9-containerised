@@ -25,10 +25,12 @@ RUN apt-get update && \
     cd /tmp && \
     curl -LO https://dl.google.com/go/go${GOALNG_VERSION}.linux-amd64.tar.gz && \
     curl -LO https://github.com/golang/dep/releases/download/v${GOLANG_DEB}/dep-linux-amd64 && \
-    tar xvf go${GOALNG_VERSION}.linux-amd64.tar.gz && \
-    mv go/bin/{go,godoc,gofmt} /usr/local/bin/ && \
+    tar xf go${GOALNG_VERSION}.linux-amd64.tar.gz && \
+    ls -lha go/bin/ && \
+    cp -v go/bin/{go,godoc,gofmt} /usr/local/bin/ && \
     mv dep-linux-amd64 /usr/local/bin/go-deb && \
     chmod a+x /usr/local/bin/go-deb && \
+    rm -rf /tmp/* && \
     /usr/bin/pip3 install -U botocore boto3 && \
     mkdir -p /app/workspace && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
