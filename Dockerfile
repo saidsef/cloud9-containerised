@@ -1,4 +1,4 @@
-FROM node:8-jessie
+FROM node:10-jessie
 MAINTAINER Said Sef <saidsef@gmail.com> (saidsef.co.uk/)
 
 ARG PORT="9099"
