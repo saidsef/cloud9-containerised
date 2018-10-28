@@ -1,4 +1,4 @@
-FROM node:8-slim
+FROM node:8-jessie
 MAINTAINER Said Sef <saidsef@gmail.com> (saidsef.co.uk/)
 
 ARG PORT="9099"
@@ -19,7 +19,7 @@ RUN apt-get update && \
     curl -fsSL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash && \
     apt-get update && \
     apt-get --no-install-recommends -yq install \
-    python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev jq docker-ce go-dep graphviz && \
+    python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev jq docker-ce graphviz && \
     /usr/bin/pip3 install -U botocore boto3 && \
     mkdir -p /app/workspace && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
