@@ -8,6 +8,7 @@ ENV AUTH ${AUTH}
 ENV DEBIAN_FRONTEND noninteractive
 ENV GOALNG_VERSION 1.10.3
 ENV GOLANG_DEB 0.5.0
+ENV GOROOT /usr/local/go
 ENV PORT ${PORT}
 
 WORKDIR /app
@@ -26,10 +27,10 @@ RUN apt-get update && \
     curl -LO https://dl.google.com/go/go${GOALNG_VERSION}.linux-amd64.tar.gz && \
     curl -LO https://github.com/golang/dep/releases/download/v${GOLANG_DEB}/dep-linux-amd64 && \
     tar xf go${GOALNG_VERSION}.linux-amd64.tar.gz && \
-    ls -lha go/bin/ && \
-    cp -v go/bin/go /usr/local/bin/ && \
-    cp -v go/bin/godoc /usr/local/bin/ && \
-    cp -v go/bin/gofmt /usr/local/bin/ && \
+    mv go /usr/local && \
+    ln -s /usr/local/go/bin/go /usr/local/bin/go && \
+    ln -s /usr/local/go/bin/godoc /usr/local/bin/godoc && \
+    ln -s /usr/local/go/bin/gofmt /usr/local/bin/gofmt && \
     mv dep-linux-amd64 /usr/local/bin/go-deb && \
     chmod a+x /usr/local/bin/go-deb && \
     rm -rf /tmp/* && \
