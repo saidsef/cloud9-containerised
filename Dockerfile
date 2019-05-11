@@ -29,7 +29,6 @@ RUN apt-get update && \
     echo "LANG=en_US.UTF-8" > /etc/locale.conf && \
     locale-gen en_US.UTF-8 && \
     cd /tmp && \
-    curl -fsSL https://glide.sh/get | sh && \
     curl -LO https://dl.google.com/go/go${GOALNG_VERSION}.linux-amd64.tar.gz && \
     curl -LO https://github.com/golang/dep/releases/download/v${GOLANG_DEB}/dep-linux-amd64 && \
     tar xf go${GOALNG_VERSION}.linux-amd64.tar.gz && \
@@ -40,6 +39,7 @@ RUN apt-get update && \
     mv dep-linux-amd64 /usr/local/bin/go-deb && \
     chmod a+x /usr/local/bin/go-deb && \
     rm -rf /tmp/* && \
+    curl -fsSL https://glide.sh/get | sh && \
     /usr/bin/pip3 install -U botocore boto3 && \
     mkdir -p /app/workspace && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
