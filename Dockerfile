@@ -39,7 +39,6 @@ RUN apt-get update && \
     mv dep-linux-amd64 /usr/local/bin/go-deb && \
     chmod a+x /usr/local/bin/go-deb && \
     rm -rf /tmp/* && \
-    curl -fsSL https://glide.sh/get | sh && \
     /usr/bin/pip3 install -U botocore boto3 && \
     mkdir -p /app/workspace && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
