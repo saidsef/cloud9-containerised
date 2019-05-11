@@ -19,11 +19,12 @@ RUN apt-get update && \
     build-essential git curl locales && \
     locale-gen "en_US.UTF-8" && \
     curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+    add-apt-repository ppa:masterminds/glide && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
     curl -fsSL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash && \
     apt-get update && \
     apt-get --no-install-recommends --force-yes -yq install \
-    python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev jq docker-ce graphviz imagemagick && \
+    python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev jq docker-ce graphviz imagemagick mercurial glide && \
     echo "LC_ALL=en_US.UTF-8" >> /etc/environment && \
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
     echo "LANG=en_US.UTF-8" > /etc/locale.conf && \
