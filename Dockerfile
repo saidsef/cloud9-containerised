@@ -1,4 +1,4 @@
-FROM node:11-slim
+FROM node:12-slim
 MAINTAINER Said Sef <saidsef@gmail.com> (saidsef.co.uk/)
 
 ARG PORT="9099"
