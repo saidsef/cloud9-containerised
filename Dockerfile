@@ -1,4 +1,4 @@
-FROM node:11-slim
+FROM node:12-slim
 MAINTAINER Said Sef <saidsef@gmail.com> (saidsef.co.uk/)
 
 ARG PORT="9099"
@@ -49,6 +49,7 @@ USER cloud9
 
 RUN  git clone --depth 2 https://github.com/c9/core.git c9sdk && \ 
     ./c9sdk/scripts/install-sdk.sh && \
+    ./c9sdk/scripts/update-npm.sh && \
     git config --global credential.helper 'cache --timeout=300'
 
 VOLUME ["/app/workspace"]
