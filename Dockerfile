@@ -1,4 +1,4 @@
-FROM node:12-slim
+FROM node:13-slim
 MAINTAINER Said Sef <saidsef@gmail.com> (saidsef.co.uk/)
 
 ARG PORT="9099"
@@ -6,7 +6,7 @@ ARG AUTH=":"
 
 ENV AUTH ${AUTH}
 ENV DEBIAN_FRONTEND noninteractive
-ENV GOALNG_VERSION 1.12.10
+ENV GOALNG_VERSION 1.13.4
 ENV GOLANG_DEB 0.5.4
 ENV GOROOT /usr/local/go
 ENV PORT ${PORT}
