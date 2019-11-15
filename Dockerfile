@@ -14,7 +14,7 @@ ENV PORT ${PORT}
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get --no-install-recommends --force-yes -yq install \
+    apt-get --no-install-recommends --force-yes -yq install vim \
     apt-transport-https ca-certificates gnupg2 software-properties-common \
     build-essential git curl locales && \
     locale-gen "en_US.UTF-8" && \
@@ -39,7 +39,7 @@ RUN apt-get update && \
     mv dep-linux-amd64 /usr/local/bin/go-deb && \
     chmod a+x /usr/local/bin/go-deb && \
     rm -rf /tmp/* && \
-    /usr/bin/pip3 install -U botocore boto3 && \
+    /usr/bin/pip3 install -U botocore boto3 pipenv && \
     mkdir -p /app/workspace && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
     usermod -aG docker cloud9 && \
@@ -50,7 +50,7 @@ USER cloud9
 RUN  git clone --depth 2 https://github.com/c9/core.git c9sdk && \ 
     ./c9sdk/scripts/install-sdk.sh && \
     ./c9sdk/scripts/update-npm.sh && \
-    git config --global credential.helper 'cache --timeout=300'
+    git config --global credential.helper 'cache --timeout=3000'
 
 VOLUME ["/app/workspace"]
 
