@@ -6,7 +6,7 @@ ARG AUTH=":"
 
 ENV AUTH ${AUTH}
 ENV DEBIAN_FRONTEND noninteractive
-ENV GOALNG_VERSION 1.13.4
+ENV GOALNG_VERSION 1.13.5
 ENV GOLANG_DEB 0.5.4
 ENV GOROOT /usr/local/go
 ENV PORT ${PORT}
@@ -20,7 +20,7 @@ RUN apt-get update && \
     locale-gen "en_US.UTF-8" && \
     curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
-    curl -fsSL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash && \
+    curl -fsSL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 | bash && \
     apt-get update && \
     apt-get --no-install-recommends --force-yes -yq install \
     python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev jq docker-ce graphviz imagemagick mercurial && \
@@ -40,7 +40,8 @@ RUN apt-get update && \
     chmod a+x /usr/local/bin/go-deb && \
     rm -rf /tmp/* && \
     /usr/bin/pip3 install -U botocore boto3 pipenv && \
-    mkdir -p /app/workspace && \
+    mkdir -p /app/workspace /app/bin && \
+    echo "export PATH=$PATH:/app/bin" > /etc/environment && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
     usermod -aG docker cloud9 && \
     chown -R cloud9:cloud9 /app
@@ -50,6 +51,7 @@ USER cloud9
 RUN  git clone --depth 2 https://github.com/c9/core.git c9sdk && \ 
     ./c9sdk/scripts/install-sdk.sh && \
     ./c9sdk/scripts/update-npm.sh && \
+    ln -s /app/c9sdk/bin/c9 /app/bin/c9 && \
     git config --global credential.helper 'cache --timeout=3000'
 
 VOLUME ["/app/workspace"]
