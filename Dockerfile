@@ -41,7 +41,7 @@ RUN apt-get update && \
     rm -rf /tmp/* && \
     /usr/bin/pip3 install -U botocore boto3 pipenv && \
     mkdir -p /app/workspace /app/bin && \
-    echo "export PATH=$PATH:/app/bin" > /etc/environment && \
+    echo "export PATH=$PATH:/app/bin" >> /etc/environment && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
     usermod -aG docker cloud9 && \
     chown -R cloud9:cloud9 /app
