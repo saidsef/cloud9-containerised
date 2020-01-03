@@ -1,5 +1,6 @@
 FROM node:13-slim
-MAINTAINER Said Sef <saidsef@gmail.com> (saidsef.co.uk/)
+
+LABEL maintainer="Said Sef <saidsef@gmail.com> (saidsef.co.uk/)"
 
 ARG PORT="9099"
 ARG AUTH=":"
@@ -14,7 +15,7 @@ ENV PORT ${PORT}
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get --no-install-recommends --force-yes -yq install vim \
+    apt-get --no-install-recommends --allow-downgrades --allow-remove-essential --allow-change-held-packages -yq install vim \
     apt-transport-https ca-certificates gnupg2 software-properties-common \
     build-essential git curl locales && \
     locale-gen "en_US.UTF-8" && \
@@ -22,7 +23,7 @@ RUN apt-get update && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
     curl -fsSL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 | bash && \
     apt-get update && \
-    apt-get --no-install-recommends --force-yes -yq install \
+    apt-get --no-install-recommends --allow-downgrades --allow-remove-essential --allow-change-held-packages -yq install \
     python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev jq docker-ce graphviz imagemagick mercurial && \
     echo "LC_ALL=en_US.UTF-8" >> /etc/environment && \
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
