@@ -13,7 +13,9 @@ before_script:
   - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
   - docker buildx create --use
 script:
-  - docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t saidsef/cloud9-containerised:latest --push .
+  - docker buildx build --platform linux/amd64 -t saidsef/cloud9-containerised:latest --push .
+  - docker buildx build --platform linux/arm64 -t saidsef/cloud9-containerised:latest --push . || true
+  - docker buildx build --platform linux/arm/v7 -t saidsef/cloud9-containerised:latest --push . || true
 notifications:
   email: true
 after_success:
