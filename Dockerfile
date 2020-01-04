@@ -51,7 +51,7 @@ USER cloud9
 
 RUN  git clone --depth 2 https://github.com/c9/core.git c9sdk && \ 
     ./c9sdk/scripts/install-sdk.sh && \
-    ./c9sdk/scripts/update-npm.sh && \
+    # ./c9sdk/scripts/update-npm.sh && \
     ln -s /app/c9sdk/bin/c9 /app/bin/c9 && \
     git config --global credential.helper 'cache --timeout=3000'
 
