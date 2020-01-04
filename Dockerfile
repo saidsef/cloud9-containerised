@@ -24,7 +24,7 @@ RUN apt-get update && \
     # curl -fsSL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 | bash && \
     apt-get update && \
     apt-get --no-install-recommends --allow-downgrades --allow-remove-essential --allow-change-held-packages -yq install \
-    python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev jq graphviz imagemagick mercurial && \
+    python3 python3-pip python3-dev python2.7 python-pip python-daemon python-dev jq graphviz imagemagick && \
     echo "LC_ALL=en_US.UTF-8" >> /etc/environment && \
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
     echo "LANG=en_US.UTF-8" > /etc/locale.conf && \
@@ -40,7 +40,7 @@ RUN apt-get update && \
     # mv dep-linux-amd64 /usr/local/bin/go-deb && \
     # chmod a+x /usr/local/bin/go-deb && \
     # rm -rf /tmp/* && \
-    /usr/bin/pip3 install -U botocore boto3 pipenv && \
+    /usr/bin/pip3 install --no-cache-dir -U botocore boto3 pipenv && \
     mkdir -p /app/workspace /app/bin && \
     echo "export PATH=$PATH:/app/bin" >> /etc/environment && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
