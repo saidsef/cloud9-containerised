@@ -44,7 +44,7 @@ RUN apt-get update && \
     mkdir -p /app/workspace /app/bin && \
     echo "export PATH=$PATH:/app/bin" >> /etc/environment && \
     useradd -m -d /app -s /bin/bash -U cloud9 && \
-    usermod -aG docker cloud9 && \
+    # usermod -aG docker cloud9 && \
     chown -R cloud9:cloud9 /app
 
 USER cloud9
