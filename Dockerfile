@@ -1,5 +1,6 @@
 FROM node:13-slim
-MAINTAINER Said Sef <saidsef@gmail.com> (saidsef.co.uk/)
+
+LABEL maintainer="Said Sef <saidsef@gmail.com> (saidsef.co.uk/)"
 
 ARG PORT="9099"
 ARG AUTH=":"
