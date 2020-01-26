@@ -1,0 +1,72 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud9
+  namespace: cicd
+  labels:
+    name: cloud9
+    app: cloud9
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: cloud9
+  template:
+    metadata:
+      labels:
+        name: cloud9
+        app: cloud9
+    spec:
+      initContainers:
+        - name: volume-permissions
+          image: busybox
+          command: ['sh', '-c', 'chmod -R a+rwX /app && chmod -R g+rw /var/run/docker.sock']
+          volumeMounts:
+          - mountPath: /app/workspace
+            name: cloud9-storage
+            subPath: data
+          - mountPath: /var/run/docker.sock
+            name: docker-sock
+        - name: git-permissions
+          image: busybox
+          command: ['sh', '-c']
+          args: ["export HOME=/app; git config --global credential.helper 'cache --timeout=300'; chmod -R a+rwX /app"]
+          volumeMounts:
+          - mountPath: /app/workspace
+            name: cloud9-storage
+            subPath: data
+          - mountPath: /var/run/docker.sock
+            name: docker-sock
+      containers:
+        - image: saidsef/cloud9-containerised:latest
+          name: cloud9
+          ports:
+            - protocol: TCP
+              containerPort: 9099
+              name: cloud980
+          volumeMounts:
+            - name: cloud9-storage
+              mountPath: /app/workspace
+              subPath: data
+            - name: docker-sock
+              mountPath: /var/run/docker.sock
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1000m"     
+      volumes:
+        - name: cloud9-storage
+          emptyDir: {}
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+            type: File
