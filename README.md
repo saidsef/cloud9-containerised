@@ -29,3 +29,10 @@ docker pull saidsef/cloud9-containerised
 ```shell
 docker run -d -p 9099:9099 -v /path/to/workspace:/app/workspace saidsef/cloud9-containerised
 ```
+### Kubernetes
+
+> Remeber to update `deployment/ingress.yml` hostname to deploy and access the services
+
+```shell
+kubectl apply -k deployment/
+```
