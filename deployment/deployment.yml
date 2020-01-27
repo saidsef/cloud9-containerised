@@ -3,7 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cloud9
-  namespace: cicd
   labels:
     name: cloud9
     app: cloud9
@@ -62,7 +61,15 @@ spec:
               cpu: "500m"
             limits:
               memory: "1024Mi"
-              cpu: "1000m"     
+              cpu: "1000m"
+          livenessProbe:
+            exec:
+              command:
+                - pgrep
+                - node
+          readinessProbe:
+            tcpSocket:
+                port: 9099
       volumes:
         - name: cloud9-storage
           emptyDir: {}
