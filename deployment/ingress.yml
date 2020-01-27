@@ -1,0 +1,17 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: cloud9
+  labels:
+    name: cloud9
+    app: cloud9
+spec:
+  rules:
+  - host: $(HOSTNAME)
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: cloud9
+          servicePort: 9099
