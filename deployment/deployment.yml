@@ -22,6 +22,8 @@ spec:
         name: cloud9
         app: cloud9
     spec:
+      restartPolicy: Always
+      shareProcessNamespace: true
       initContainers:
         - name: volume-permissions
           image: busybox
@@ -67,9 +69,19 @@ spec:
               command:
                 - pgrep
                 - node
+            failureThreshold: 2
+            successThreshold: 1
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            timeoutSeconds: 2
           readinessProbe:
             tcpSocket:
                 port: 9099
+            failureThreshold: 2
+            successThreshold: 1
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 2
       volumes:
         - name: cloud9-storage
           emptyDir: {}
