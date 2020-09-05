@@ -1,4 +1,4 @@
-FROM node:13-slim
+FROM node:12-slim
 
 LABEL maintainer="Said Sef <saidsef@gmail.com> (saidsef.co.uk/)"
 
