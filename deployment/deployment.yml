@@ -23,49 +23,6 @@ spec:
         app: cloud9
     spec:
       restartPolicy: Always
-      shareProcessNamespace: true
-      initContainers:
-        - name: volume-permissions
-          image: busybox
-          command: ['sh', '-c', 'chmod -R a+rwX /app && chmod -R g+rw /var/run/docker.sock']
-          volumeMounts:
-          - mountPath: /app/workspace
-            name: cloud9-storage
-            subPath: data
-            readOnly: false
-          - mountPath: /var/run/docker.sock
-            name: docker-sock
-            readOnly: true
-        - name: git-permissions
-          image: busybox
-          command: ['sh', '-c']
-          args: ["export HOME=/app; git config --global credential.helper 'cache --timeout=300'; chmod -R a+rwX /app"]
-          volumeMounts:
-          - mountPath: /app/workspace
-            name: cloud9-storage
-            subPath: data
-            readOnly: false
-          - mountPath: /var/run/docker.sock
-            name: docker-sock
-            readOnly: true
-          resources:
-            requests:
-              memory: "10Mi"
-              cpu: "10m"
-            limits:
-              memory: "20Mi"
-              cpu: "20m"
-          securityContext:
-            readOnlyRootFilesystem: true
-            privileged: false
-            allowPrivilegeEscalation: false
-            runAsNonRoot: true
-            capabilities:
-              drop:
-                - ALL
-              add:
-                - NET_ADMIN
-                - SYS_TIME
       containers:
         - image: saidsef/cloud9-containerised:latest
           name: cloud9
@@ -77,8 +34,10 @@ spec:
             - name: cloud9-storage
               mountPath: /app/workspace
               subPath: data
+              readOnly: false
             - name: docker-sock
               mountPath: /var/run/docker.sock
+              readOnly: true
           resources:
             requests:
               memory: "1Gi"
@@ -109,6 +68,8 @@ spec:
             privileged: false
             allowPrivilegeEscalation: false
             runAsNonRoot: true
+            runAsGroup: 10000
+            runAsUser: 10000
             capabilities:
               drop:
                 - ALL
