@@ -32,8 +32,10 @@ spec:
           - mountPath: /app/workspace
             name: cloud9-storage
             subPath: data
+            readOnly: true
           - mountPath: /var/run/docker.sock
             name: docker-sock
+            readOnly: true
         - name: git-permissions
           image: busybox
           command: ['sh', '-c']
@@ -42,8 +44,28 @@ spec:
           - mountPath: /app/workspace
             name: cloud9-storage
             subPath: data
+            readOnly: false
           - mountPath: /var/run/docker.sock
             name: docker-sock
+            readOnly: true
+          resources:
+            requests:
+              memory: "10Mi"
+              cpu: "10m"
+            limits:
+              memory: "20Mi"
+              cpu: "20m"
+          securityContext:
+            readOnlyRootFilesystem: true
+            privileged: false
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - NET_ADMIN
+                - SYS_TIME
       containers:
         - image: saidsef/cloud9-containerised:latest
           name: cloud9
@@ -59,11 +81,11 @@ spec:
               mountPath: /var/run/docker.sock
           resources:
             requests:
-              memory: "512Mi"
+              memory: "2Gi"
               cpu: "500m"
             limits:
-              memory: "1024Mi"
-              cpu: "600m"
+              memory: "1Gi"
+              cpu: "1000m"
           livenessProbe:
             exec:
               command:
@@ -82,6 +104,17 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 2
+          securityContext:
+            readOnlyRootFilesystem: true
+            privileged: false
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - NET_ADMIN
+                - SYS_TIME
       volumes:
         - name: cloud9-storage
           emptyDir: {}
