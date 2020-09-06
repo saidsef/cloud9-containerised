@@ -7,15 +7,14 @@ ARG AUTH=":"
 
 ENV AUTH ${AUTH}
 ENV DEBIAN_FRONTEND noninteractive
-ENV GOALNG_VERSION 1.13.5
-ENV GOLANG_DEB 0.5.4
+ENV GOALNG_VERSION 1.15.1
 ENV GOROOT /usr/local/go
 ENV PORT ${PORT}
 
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get --no-install-recommends --allow-downgrades --allow-remove-essential --allow-change-held-packages -yq install vim \
+    apt-get --no-install-recommends --allow-downgrades --allow-remove-essential --allow-change-held-packages -yq install vim tree \
     apt-transport-https ca-certificates gnupg2 software-properties-common \
     build-essential git curl locales && \
     locale-gen "en_US.UTF-8" && \
@@ -30,16 +29,13 @@ RUN apt-get update && \
     echo "LANG=en_US.UTF-8" > /etc/locale.conf && \
     locale-gen en_US.UTF-8 && \
     cd /tmp && \
-    # curl -LO https://dl.google.com/go/go${GOALNG_VERSION}.linux-amd64.tar.gz && \
-    # curl -LO https://github.com/golang/dep/releases/download/v${GOLANG_DEB}/dep-linux-amd64 && \
-    # tar xf go${GOALNG_VERSION}.linux-amd64.tar.gz && \
-    # mv go /usr/local && \
-    # ln -s /usr/local/go/bin/go /usr/local/bin/go && \
-    # ln -s /usr/local/go/bin/godoc /usr/local/bin/godoc && \
-    # ln -s /usr/local/go/bin/gofmt /usr/local/bin/gofmt && \
-    # mv dep-linux-amd64 /usr/local/bin/go-deb && \
-    # chmod a+x /usr/local/bin/go-deb && \
-    # rm -rf /tmp/* && \
+    curl -LO https://dl.google.com/go/go${GOALNG_VERSION}.linux-amd64.tar.gz && \
+    tar xf go${GOALNG_VERSION}.linux-amd64.tar.gz && \
+    mv go /usr/local && \
+    ln -s /usr/local/go/bin/go /usr/local/bin/go && \
+    ln -s /usr/local/go/bin/godoc /usr/local/bin/godoc && \
+    ln -s /usr/local/go/bin/gofmt /usr/local/bin/gofmt && \
+    rm -rf /tmp/* && \
     /usr/bin/pip3 install --no-cache-dir -U botocore boto3 pipenv && \
     mkdir -p /app/workspace /app/bin && \
     echo "export PATH=$PATH:/app/bin" >> /etc/environment && \
@@ -59,4 +55,4 @@ VOLUME ["/app/workspace"]
 
 EXPOSE ${PORT}
 
-CMD /usr/local/bin/node c9sdk/server.js -a ${AUTH} -l 0.0.0.0 -p ${PORT} -w ./workspace --collab --no-cache
+CMD /usr/local/bin/node c9sdk/server.js -a ${AUTH} -l 0.0.0.0 -p ${PORT} --collab --useBrowserCache -w ./workspace --no-cache
