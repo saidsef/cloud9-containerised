@@ -25,7 +25,19 @@ spec:
       restartPolicy: Always
       containers:
         - image: saidsef/cloud9-containerised:latest
+          imagePullPolicy: Always
           name: cloud9
+          env:
+            - name: LC_ALL
+              value: "C.UTF-8"
+            - name: LANG
+              value: "C.UTF-8"
+            - name: EDITOR
+              value: "vim"
+            - name: VISUAL
+              value: "vim"
+            - name: GO111MODULE
+              value: "on"
           ports:
             - protocol: TCP
               containerPort: 9099
@@ -35,9 +47,6 @@ spec:
               mountPath: /app/workspace
               subPath: data
               readOnly: false
-            - name: docker-sock
-              mountPath: /var/run/docker.sock
-              readOnly: true
           resources:
             requests:
               memory: "1Gi"
@@ -64,7 +73,7 @@ spec:
             periodSeconds: 5
             timeoutSeconds: 2
           securityContext:
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
             privileged: false
             allowPrivilegeEscalation: false
             runAsNonRoot: true
@@ -79,7 +88,3 @@ spec:
       volumes:
         - name: cloud9-storage
           emptyDir: {}
-        - name: docker-sock
-          hostPath:
-            path: /var/run/docker.sock
-            type: File
